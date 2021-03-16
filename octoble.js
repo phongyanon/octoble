@@ -109,8 +109,8 @@ DeviceHandler.prototype.getService = function(servuuid) {
         let waiting = true;
 
         let cb = function(serv_data) {
-            emitter.off('get_service', cb);
             if (waiting && serv_data && serv_data.device_uuid == uuid) {
+                emitter.off('get_service', cb);
                 waiting = false;
                 resolve(serv_data.data);
             }
@@ -155,7 +155,7 @@ DeviceHandler.prototype.writeServiceCharacteristic = function(servuuid, charuuid
 #  OneChat BLE Library
 ******************************************************************************************************************/
 
-let OneChatBLE = function(option = {}) {
+let Octoble = function(option = {}) {
     this.scan_filter = {};
     this.scan_timeout = option.scan_timeout || 15000;
     this.read_timeout = option.read_timeout || 10000;
@@ -164,14 +164,14 @@ let OneChatBLE = function(option = {}) {
     this.is_scanning = false;
 }
 
-OneChatBLE.prototype = new EventEmitter();
+Octoble.prototype = new EventEmitter();
 
-OneChatBLE.prototype.startScan = function(option = {}) {
+Octoble.prototype.startScan = function(option = {}) {
     let that = this;
     this.is_scanning = true;
     
     let callback = function(device_data) {
-        OneChatBLE.prototype.emit('discover', device_data);
+        Octoble.prototype.emit('discover', device_data);
     }
 
     this.scan_filter = option.filter || null;
@@ -201,7 +201,7 @@ OneChatBLE.prototype.startScan = function(option = {}) {
                 let read_timeout = that.read_timeout;
                 let write_timeout = that.write_timeout;
 
-                OneChatBLE.prototype.emit('discover', new DeviceHandler(info, {
+                Octoble.prototype.emit('discover', new DeviceHandler(info, {
                     scan_timeout: scan_timeout,
                     read_timeout: read_timeout,
                     write_timeout: write_timeout
@@ -218,15 +218,14 @@ OneChatBLE.prototype.startScan = function(option = {}) {
     OneChat_scanDevice(option.timeout || that.scan_timeout);
 }
 
-OneChatBLE.prototype.stopScan = function(option = {}) {
+Octoble.prototype.stopScan = function(option = {}) {
     this.is_scanning = false;
     OneChat_stopScanDevice();
 }
 
-OneChatBLE.prototype.getDevice = function(option = {}) {
+Octoble.prototype.getDevice = function(option = {}) {
     let that = this;
     that.scan_filter = option.filter || null;
-
 
     return new Promise((resolve, reject) => {
         emitter.on('return_once_device', function(device_data) {
@@ -271,11 +270,11 @@ OneChatBLE.prototype.getDevice = function(option = {}) {
 
 /* native BLE event */
 emitter.on('start_scan_bluetooth', () => {
-    OneChatBLE.prototype.emit('scanStart');
+    Octoble.prototype.emit('scanStart');
 });
 
 emitter.on('stop_scan_bluetooth', () => {
-    OneChatBLE.prototype.emit('scanStop');
+    Octoble.prototype.emit('scanStop');
 });
 
 window.addEventListener('oneChatBluetoothCallBackData', (e) => {
