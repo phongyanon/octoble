@@ -2,6 +2,13 @@ let DebugLogger = function(option) {
 	this.divname = option.divname || 'log_area';
 }
 
+DebugLogger.prototype.clear = function(arg1, arg2=''){
+    let debugbox = document.getElementById(that.divname);
+    if (debugbox) {
+        debugbox.innerHTML = '';
+    }
+}
+
 DebugLogger.prototype.log = function(arg1, arg2=''){
 	let that = this;
 	let header, text, out;
