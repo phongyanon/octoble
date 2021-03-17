@@ -1,0 +1,82 @@
+<html>
+<head>
+    <script src="../logger.js"></script>
+    <script src="../octoble.js"></script>
+    <script src="https://chat-develop.one.th/static/javascript/v1/onechat_bluetooth.js"></script>
+</head>
+<body>
+    <script>
+        let debug = new DebugLogger({divname: 'debug_area'});
+
+        let octoble = new Octoble();
+
+        // Onechat BLE Event handler -------------------------------------------------------------
+
+        octoble.on('scanStart', () => {
+            debug.log('event', 'Scan started...');
+        });
+
+        octoble.on('scanStop', () => {
+            debug.log('event', 'Scan stopped...');
+        });
+
+        octoble.on('discover', (device) => {
+            debug.log('device found', device.getInfo());
+        });
+
+        // ---------------------------------------------------------------------------------------
+
+        function scanDemo(filter) {
+            octoble.startScan(filter);
+        }
+
+        function getServiceDemo(filter) {
+            octoble.getDevice(filter).then(device => {
+	            debug.log('found', device.getInfo());
+	         	device.getService().then(servicelist => {
+		            debug.log('service array', servicelist);
+	         	});
+            });
+        }
+
+        function writeDemo(filter) {
+            octoble.getDevice(filter).then(device => {
+	            debug.log('found', device.getInfo());
+	            device.writeServiceCharacteristic('ff00','ff01', '0006CC59513C4CAA6116D34BF71000B12EF8', 'hex')
+	            .then(result => {
+	                debug.log('write result', result);
+	                setTimeout(async () => {
+	                    try {
+	                        let result = await device.disconnect();
+	                        if (result.code == 200) {
+	                               debug.log('disconnect result', 'Success: Disconnect OK');
+	                        }
+	                    } catch(error) {
+	                           debug.log('disconnect result', 'Error: Fail to Disconnect');
+	                    }
+	                }, 3000);
+	                
+	            }).catch(error => alert(JSON.stringify(error)));
+            });
+        }
+
+        function readDemo(filter) {
+            octoble.getDevice(filter).then(device => {
+	            debug.log('found', device.getInfo());
+	            
+            });
+        }
+
+    </script>
+
+    <center><font size=+4>Octoble - OneChat BLE Library Demo</font></center><br><br>
+
+    <input type=button value="Scan All" onClick="scanDemo()"  style="background-color: yellow; color: grey; font-size: 28px; width: 200px;" />
+    <input type=button value="Scan LYS" onClick="scanDemo({filter:{'name':'LYS'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
+    <input type=button value="getserv LYS" onClick="getServiceDemo({filter:{'name':'LYS'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
+    <input type=button value="write LYS" onClick="writeDemo({filter:{'name':'LYS'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
+    <input type=button value="read LYW" onClick="readDemo({filter:{'name':'LYW'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
+    <input type=button value="Clear" onClick="debug.log(null)" style="background-color: grey; color: white; font-size: 32px; width: 200px;" />
+    <br><br><div id="debug_area" width=300>
+</body>
+</html>
