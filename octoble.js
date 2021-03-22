@@ -176,6 +176,31 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
     });
 }
 
+DeviceHandler.prototype.getCharacteristic = function(servuuid) {
+    let that = this;
+    let uuid = this.uuid.toUpperCase();
+
+    return new Promise(function(resolve, reject) {
+        let waiting = true;
+
+        let cb = function(op_data) {
+            emitter.off('get_characteristic', cb);
+            if (waiting && op_data && op_data.device_uuid == uuid) {
+                waiting = false;
+                resolve({code:200, result:'OK'});
+            }
+        }
+        setTimeout(function() {
+            waiting = false;
+            emitter.off('get_characteristic', cb);
+            reject({code:408, result:'Timeout'});
+        }, that.option.read_timeout);
+
+        emitter.on('get_characteristic', cb);
+        OneChat_getCharacteristic(servuuid);
+    });
+}
+
 /*****************************************************************************************************************
 #  OneChat BLE Library
 ******************************************************************************************************************/

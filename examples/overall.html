@@ -63,7 +63,21 @@
         function readDemo(filter) {
             octoble.getDevice(filter).then(device => {
 	            debug.log('found', device.getInfo());
-	            
+                device.getCharacteristic('180A')
+	            .then(result => {
+	                debug.log('read result', result);
+	                setTimeout(async () => {
+	                    try {
+	                        let result = await device.disconnect();
+	                        if (result.code == 200) {
+	                               debug.log('disconnect result', 'Success: Disconnect OK');
+	                        }
+	                    } catch(error) {
+	                           debug.log('disconnect result', 'Error: Fail to Disconnect');
+	                    }
+	                }, 3000);
+	                
+	            }).catch(error => alert(JSON.stringify(error)));
             });
         }
 
