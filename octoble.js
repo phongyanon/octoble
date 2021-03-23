@@ -172,7 +172,7 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
         }, that.option.read_timeout);
 
         emitter.on('read_characteristic', cb);
-        // alert(charuuid)
+        alert(charuuid)
         OneChat_readCharacteristic(charuuid);
     });
 }
@@ -208,7 +208,7 @@ DeviceHandler.prototype.getCharacteristic = function(servuuid) {
 
 let Octoble = function(option = {}) {
     this.scan_filter = {};
-    this.scan_timeout = option.scan_timeout || 30000;
+    this.scan_timeout = option.scan_timeout || 15000;
     this.read_timeout = option.read_timeout || 10000;
     this.write_timeout = option.write_timeout || 10000;
 
