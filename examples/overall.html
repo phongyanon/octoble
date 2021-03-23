@@ -69,8 +69,7 @@
                     device.getCharacteristic('180A')
                     .then(result => {
                         debug.log('characteristic array', result);
-                        device.readCharacteristic('2A25')
-                        .then(readResult => {
+                        device.readCharacteristic('2A25').then(readResult => {
                             debug.log('read data', readResult);
 
                         }).catch(error => alert(JSON.stringify(error))); 
