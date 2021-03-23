@@ -336,6 +336,6 @@ window.addEventListener('oneChatBluetoothCallBackData', (e) => {
     catch(e) {
         data = {};
     }
-    alert(type, data)
+    if(type === 'read_characteristic'){ alert(type, data) }
     emitter.emit(type, data);
 });
