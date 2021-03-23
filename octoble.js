@@ -185,6 +185,7 @@ DeviceHandler.prototype.readCharacteristicByUUID = function(servuuid, charuuid) 
         let waiting = true;
 
         let cb = function(readData) {
+            alert(readData)
             if (waiting && readData && readData.device_uuid == uuid) {
                 emitter.off('read_characteristic_by_uuid_V2', cb);
                 waiting = false;
@@ -195,7 +196,7 @@ DeviceHandler.prototype.readCharacteristicByUUID = function(servuuid, charuuid) 
             waiting = false;
             emitter.off('read_characteristic_by_uuid_V2', cb);
             reject({code:408, result:'read_characteristic_by_uuid_V2 Timeout'});
-        }, 30000);
+        }, that.option.read_timeout);
 
         emitter.on('read_characteristic_by_uuid_V2', cb);
         OneChat_readCharacteristicByUUID(uuid, servuuid, charuuid);
