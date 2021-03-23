@@ -162,7 +162,7 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
             emitter.off('read_characteristic', cb);
             if (waiting && readData && readData.device_uuid == uuid) {
                 waiting = false;
-                resolve(readData);
+                resolve(readData.data);
             }
         }
         setTimeout(function() {
