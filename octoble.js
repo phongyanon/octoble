@@ -159,6 +159,7 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
         let waiting = true;
 
         let cb = function(readData) {
+            alert(readData)
             if (waiting && readData){ //  && readData.device_uuid == uuid) {
                 emitter.off('read_characteristic', cb);
                 waiting = false;
