@@ -158,11 +158,11 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
     return new Promise(function(resolve, reject) {
         let waiting = true;
 
-        let cb = function(characteristicData) {
+        let cb = function(readData) {
             emitter.off('read_characteristic', cb);
             if (waiting && op_data && op_data.device_uuid == uuid) {
                 waiting = false;
-                resolve(characteristicData.data);
+                resolve(readData);
             }
         }
         setTimeout(function() {
@@ -183,11 +183,11 @@ DeviceHandler.prototype.getCharacteristic = function(servuuid) {
     return new Promise(function(resolve, reject) {
         let waiting = true;
 
-        let cb = function(op_data) {
+        let cb = function(charData) {
             emitter.off('get_characteristic', cb);
             if (waiting && op_data && op_data.device_uuid == uuid) {
                 waiting = false;
-                resolve({code:200, result:'OK'});
+                resolve(charData.data);
             }
         }
         setTimeout(function() {
