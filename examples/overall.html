@@ -63,12 +63,13 @@
         function readDemo(filter) {
             octoble.getDevice(filter).then(device => {
                 debug.log('found', device.getInfo());
-                device.getService()
-                .then(servicelist => {
+
+                device.getService().then(servicelist => {
                     debug.log('service array', servicelist);
-                    device.getCharacteristic('180A')
-                    .then(result => {
+
+                    device.getCharacteristic('180A').then(result => {
                         debug.log('characteristic array', result);
+                        
                         device.readCharacteristic('2A25').then(readResult => {
                             debug.log('read data', readResult);
 
