@@ -172,6 +172,7 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
         }, that.option.read_timeout);
 
         emitter.on('read_characteristic', cb);
+        alert(uuid)
         OneChat_readCharacteristic(charuuid);
     });
 }
@@ -336,6 +337,6 @@ window.addEventListener('oneChatBluetoothCallBackData', (e) => {
     catch(e) {
         data = {};
     }
-    if(type == 'read_characteristic'){ console.log('>>>>>>>> ', data) }
+    if(type == 'read_characteristic'){ alert(data); }
     emitter.emit(type, data);
 });
