@@ -60,7 +60,7 @@
             });
         }
 
-        function readDemo(filter) {
+        function getCharacteristic(filter) {
             octoble.getDevice(filter).then(device => {
                 debug.log('found', device.getInfo());
 
@@ -70,7 +70,22 @@
                     device.getCharacteristic('180A').then(result => {
                         debug.log('characteristic array', result);
                         
-                        device.readCharacteristic('2A25').then(readResult => {
+                    }).catch(error => alert(JSON.stringify(error))); 
+	         	});
+            });
+        }
+
+        function readDemo(filter) {
+            octoble.getDevice(filter).then(device => {
+                debug.log('found', device.getInfo());
+
+                device.getService().then(servicelist => {
+                    debug.log('service array', servicelist);
+
+                    device.getCharacteristic('180A').then(result => {
+                        debug.log('characteristic array', result);
+
+                        device.readCharacteristicByUUID('180A', '2A25').then(readResult => {
                             debug.log('read data', readResult);
 
                         }).catch(error => alert(JSON.stringify(error))); 
@@ -89,6 +104,7 @@
     <input type=button value="getserv LYS" onClick="getServiceDemo({filter:{'name':'LYS'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
     <input type=button value="getserv LYW" onClick="getServiceDemo({filter:{'name':'LYWSD03MMC'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
     <input type=button value="write LYS" onClick="writeDemo({filter:{'name':'LYS'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
+    <input type=button value="get Char LYW" onClick="getCharacteristic({filter:{'name':'LYWSD03MMC'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
     <input type=button value="read LYW" onClick="readDemo({filter:{'name':'LYWSD03MMC'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
     <input type=button value="Clear" onClick="debug.log(null)" style="background-color: grey; color: white; font-size: 32px; width: 200px;" />
     <br><br><div id="debug_area" width=300>

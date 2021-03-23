@@ -177,6 +177,31 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
     });
 }
 
+DeviceHandler.prototype.readCharacteristicByUUID = function(servuuid, charuuid) {
+    let that = this;
+    let uuid = this.uuid.toUpperCase();
+
+    return new Promise(function(resolve, reject) {
+        let waiting = true;
+
+        let cb = function(readData) {
+            if (waiting && readData && readData.device_uuid == uuid) {
+                emitter.off('read_characteristic_by_uuid_V2', cb);
+                waiting = false;
+                resolve(readData.data);
+            }
+        }
+        setTimeout(function() {
+            waiting = false;
+            emitter.off('read_characteristic_by_uuid_V2', cb);
+            reject({code:408, result:'read_characteristic_by_uuid_V2 Timeout'});
+        }, that.option.read_timeout);
+
+        emitter.on('read_characteristic_by_uuid_V2', cb);
+        OneChat_readCharacteristicByUUID(uuid, servuuid, charuuid);
+    });
+}
+
 DeviceHandler.prototype.getCharacteristic = function(servuuid) {
     let that = this;
     let uuid = this.uuid.toUpperCase();
@@ -337,6 +362,5 @@ window.addEventListener('oneChatBluetoothCallBackData', (e) => {
     catch(e) {
         data = {};
     }
-    if(type == 'read_characteristic'){ alert(data); }
     emitter.emit(type, data);
 });
