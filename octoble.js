@@ -195,7 +195,7 @@ DeviceHandler.prototype.readCharacteristicByUUID = function(servuuid, charuuid) 
             waiting = false;
             emitter.off('read_characteristic_by_uuid_V2', cb);
             reject({code:408, result:'read_characteristic_by_uuid_V2 Timeout'});
-        }, that.option.read_timeout);
+        }, 30000);
 
         emitter.on('read_characteristic_by_uuid_V2', cb);
         OneChat_readCharacteristicByUUID(uuid, servuuid, charuuid);
