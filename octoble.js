@@ -160,7 +160,7 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
 
         let cb = function(readData) {
             emitter.off('read_characteristic', cb);
-            if (waiting && op_data && op_data.device_uuid == uuid) {
+            if (waiting && readData && readData.device_uuid == uuid) {
                 waiting = false;
                 resolve(readData);
             }
@@ -185,7 +185,7 @@ DeviceHandler.prototype.getCharacteristic = function(servuuid) {
 
         let cb = function(charData) {
             emitter.off('get_characteristic', cb);
-            if (waiting && op_data && op_data.device_uuid == uuid) {
+            if (waiting && charData && charData.device_uuid == uuid) {
                 waiting = false;
                 resolve(charData.data);
             }
@@ -194,7 +194,7 @@ DeviceHandler.prototype.getCharacteristic = function(servuuid) {
             waiting = false;
             emitter.off('get_characteristic', cb);
             reject({code:408, result:'get_characteristic Timeout'});
-        }, 30000);
+        }, that.option.read_timeout);
 
         emitter.on('get_characteristic', cb);
         OneChat_getCharacteristic(servuuid);
