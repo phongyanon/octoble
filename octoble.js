@@ -172,7 +172,7 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
         }, that.option.read_timeout);
 
         emitter.on('read_characteristic', cb);
-        alert(uuid)
+        // alert(charuuid)
         OneChat_readCharacteristic(charuuid);
     });
 }
