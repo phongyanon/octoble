@@ -63,7 +63,7 @@
         function readDemo(filter) {
             octoble.getDevice(filter).then(device => {
 	            debug.log('found', device.getInfo());
-                device.getCharacteristic('FE95')
+                device.getCharacteristic('EBE0CCB0-7A0A-4B0C-8A1A-6FF2997DA3A6')
 	            .then(result => {
 	                debug.log('read result', result);
 	                setTimeout(async () => {
@@ -94,5 +94,7 @@
     <input type=button value="read LYW" onClick="readDemo({filter:{'name':'LYWSD03MMC'}})" style="background-color: green; color: grey; font-size: 28; width: 200px;" />
     <input type=button value="Clear" onClick="debug.log(null)" style="background-color: grey; color: white; font-size: 32px; width: 200px;" />
     <br><br><div id="debug_area" width=300>
+    <br>
+    <a href="./testwebBluetooth.html">Test Web Bluetooth</a>
 </body>
 </html>
