@@ -187,7 +187,7 @@ DeviceHandler.prototype.getCharacteristic = function(servuuid) {
             emitter.off('get_characteristic', cb);
             if (waiting && op_data && op_data.device_uuid == uuid) {
                 waiting = false;
-                resolve(charData.data);
+                resolve(charData);
             }
         }
         setTimeout(function() {
