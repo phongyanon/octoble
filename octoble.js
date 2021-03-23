@@ -187,14 +187,14 @@ DeviceHandler.prototype.getCharacteristic = function(servuuid) {
             emitter.off('get_characteristic', cb);
             if (waiting && op_data && op_data.device_uuid == uuid) {
                 waiting = false;
-                resolve(charData);
+                resolve("charData.data");
             }
         }
         setTimeout(function() {
             waiting = false;
             emitter.off('get_characteristic', cb);
             reject({code:408, result:'Timeout'});
-        }, that.option.read_timeout);
+        }, 20000);
 
         emitter.on('get_characteristic', cb);
         OneChat_getCharacteristic(servuuid);
