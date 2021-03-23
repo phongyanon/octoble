@@ -66,7 +66,7 @@
                 device.getService()
                 .then(servicelist => {
                     debug.log('service array', servicelist);
-                    device.getCharacteristic('EBE0CCB0-7A0A-4B0C-8A1A-6FF2997DA3A6')
+                    device.getCharacteristic('180A')
                     .then(result => {
                         debug.log('read result', result);
                         setTimeout(async () => {
