@@ -68,8 +68,12 @@
                     debug.log('service array', servicelist);
                     device.getCharacteristic('180A')
                     .then(result => {
-                        debug.log('read result', result);
-                        
+                        debug.log('characteristic array', result);
+                        device.readCharacteristic('2A26')
+                        .then(readData => {
+                            debug.log('read data', readData);
+
+                        }).catch(error => alert(JSON.stringify(error))); 
                     }).catch(error => alert(JSON.stringify(error))); 
 	         	});
             });
