@@ -62,22 +62,26 @@
 
         function readDemo(filter) {
             octoble.getDevice(filter).then(device => {
-	            debug.log('found', device.getInfo());
-                device.getCharacteristic('EBE0CCB0-7A0A-4B0C-8A1A-6FF2997DA3A6')
-	            .then(result => {
-	                debug.log('read result', result);
-	                setTimeout(async () => {
-	                    try {
-	                        let result = await device.disconnect();
-	                        if (result.code == 200) {
-	                               debug.log('disconnect result', 'Success: Disconnect OK');
-	                        }
-	                    } catch(error) {
-	                           debug.log('disconnect result', 'Error: Fail to Disconnect');
-	                    }
-	                }, 3000);
-	                
-	            }).catch(error => alert(JSON.stringify(error)));
+                debug.log('found', device.getInfo());
+                device.getService()
+                .then(servicelist => {
+                    debug.log('service array', servicelist);
+                    device.getCharacteristic('EBE0CCB0-7A0A-4B0C-8A1A-6FF2997DA3A6')
+                    .then(result => {
+                        debug.log('read result', result);
+                        setTimeout(async () => {
+                            try {
+                                let result = await device.disconnect();
+                                if (result.code == 200) {
+                                    debug.log('disconnect result', 'Success: Disconnect OK');
+                                }
+                            } catch(error) {
+                                debug.log('disconnect result', 'Error: Fail to Disconnect');
+                            }
+                        }, 3000);
+                        
+                    }).catch(error => alert(JSON.stringify(error))); 
+	         	});
             });
         }
 
