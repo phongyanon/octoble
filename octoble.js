@@ -172,7 +172,6 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
         }, that.option.read_timeout);
 
         emitter.on('read_characteristic', cb);
-        alert(charuuid)
         OneChat_readCharacteristic(charuuid);
     });
 }
@@ -185,7 +184,6 @@ DeviceHandler.prototype.readCharacteristicByUUID = function(servuuid, charuuid) 
         let waiting = true;
 
         let cb = function(readData) {
-            alert(readData)
             if (waiting && readData && readData.device_uuid == uuid) {
                 emitter.off('read_characteristic_by_uuid_V2', cb);
                 waiting = false;
@@ -357,6 +355,7 @@ emitter.on('stop_scan_bluetooth', () => {
 window.addEventListener('oneChatBluetoothCallBackData', (e) => {
     let type = e.detail.type;
     let data;
+    if(type == 'read_characteristic_by_uuid_V2') alert(data);
     try {
         data = JSON.parse(e.detail.data);
     }
