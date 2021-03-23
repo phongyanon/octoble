@@ -159,11 +159,11 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
         let waiting = true;
 
         let cb = function(readData) {
-            emitter.off('read_characteristic', cb);
-            // if (waiting && readData  && readData.device_uuid == uuid) {
+            if (waiting && readData){ //  && readData.device_uuid == uuid) {
+                emitter.off('read_characteristic', cb);
                 waiting = false;
                 resolve(readData.data);
-            // }
+            }
         }
         setTimeout(function() {
             waiting = false;
