@@ -88,6 +88,17 @@
                         device.readCharacteristicByUUID('180A', '2A24').then(readResult => {
                             debug.log('read data', readResult);
 
+                            setTimeout(async () => {
+                                try {
+                                    let result = await device.disconnect();
+                                    if (result.code == 200) {
+                                        debug.log('disconnect result', 'Success: Disconnect OK');
+                                    }
+                                } catch(error) {
+                                    debug.log('disconnect result', 'Error: Fail to Disconnect');
+                                }
+                            }, 3000);
+
                         }).catch(error => alert(JSON.stringify(error))); 
                     }).catch(error => alert(JSON.stringify(error))); 
 	         	});
