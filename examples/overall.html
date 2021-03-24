@@ -79,30 +79,21 @@
             octoble.getDevice(filter).then(device => {
                 debug.log('found', device.getInfo());
 
-                device.getService().then(servicelist => {
+                device.getService().then(async (servicelist) => {
                     debug.log('service array', servicelist);
 
-                    device.getCharacteristic('180A').then(result => {
-                        debug.log('characteristic array', result);
+                    try {
+                        let char_result = await device.getCharacteristic('180A');
+                        debug.log('characteristic array', char_result);
+                        let read_result = await device.readCharacteristic('2A24');
+                        debug.log('read data', read_result);
 
-                        device.readCharacteristic('2A24').then(readResult => {
-                            debug.log('read data', readResult);
+                    } catch (error) {
+                        alert(JSON.stringify(error));
+                    }
 
-                            setTimeout(async () => {
-                                try {
-                                    let result = await device.disconnect();
-                                    if (result.code == 200) {
-                                        debug.log('disconnect result', 'Success: Disconnect OK');
-                                    }
-                                } catch(error) {
-                                    debug.log('disconnect result', 'Error: Fail to Disconnect');
-                                }
-                            }, 3000);
-
-                        }).catch(error => alert(JSON.stringify(error))); 
-                    }).catch(error => alert(JSON.stringify(error))); 
-	         	}).catch(error => alert(JSON.stringify(error))); ;
-            });
+	         	}).catch(error => alert(JSON.stringify(error)));
+            }).catch(error => alert(JSON.stringify(error)));
         }
 
     </script>
