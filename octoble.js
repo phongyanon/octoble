@@ -151,6 +151,31 @@ DeviceHandler.prototype.writeServiceCharacteristic = function(servuuid, charuuid
     });
 }
 
+DeviceHandler.prototype.getCharacteristic = function(servuuid) {
+    let that = this;
+    let uuid = this.uuid.toUpperCase();
+
+    return new Promise(function(resolve, reject) {
+        let waiting = true;
+
+        let cb = function(charData) {
+            emitter.off('get_characteristic', cb);
+            if (waiting && charData && charData.device_uuid == uuid) {
+                waiting = false;
+                resolve(charData.data);
+            }
+        }
+        setTimeout(function() {
+            waiting = false;
+            emitter.off('get_characteristic', cb);
+            reject({code:408, result:'get_characteristic Timeout'});
+        }, that.option.read_timeout);
+
+        emitter.on('get_characteristic', cb);
+        OneChat_getCharacteristic(servuuid);
+    });
+}
+
 DeviceHandler.prototype.readCharacteristic = function(charuuid) {
     let that = this;
     let uuid = this.uuid.toUpperCase();
@@ -159,11 +184,11 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
         let waiting = true;
 
         let cb = function(readData) {
-            //if (waiting && readData){ //  && readData.device_uuid == uuid) {
+            if (waiting && readData){ //  && readData.device_uuid == uuid) {
                 emitter.off('read_characteristic', cb);
                 waiting = false;
                 resolve(readData.data);
-            //}
+            }
         }
         setTimeout(function() {
             waiting = false;
@@ -198,31 +223,6 @@ DeviceHandler.prototype.readCharacteristicByUUID = function(servuuid, charuuid) 
 
         emitter.on('read_characteristic_by_uuid_V2', cb);
         OneChat_readCharacteristicByUUID(uuid, servuuid, charuuid);
-    });
-}
-
-DeviceHandler.prototype.getCharacteristic = function(servuuid) {
-    let that = this;
-    let uuid = this.uuid.toUpperCase();
-
-    return new Promise(function(resolve, reject) {
-        let waiting = true;
-
-        let cb = function(charData) {
-            emitter.off('get_characteristic', cb);
-            if (waiting && charData && charData.device_uuid == uuid) {
-                waiting = false;
-                resolve(charData.data);
-            }
-        }
-        setTimeout(function() {
-            waiting = false;
-            emitter.off('get_characteristic', cb);
-            reject({code:408, result:'get_characteristic Timeout'});
-        }, that.option.read_timeout);
-
-        emitter.on('get_characteristic', cb);
-        OneChat_getCharacteristic(servuuid);
     });
 }
 

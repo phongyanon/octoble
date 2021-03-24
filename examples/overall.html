@@ -82,10 +82,10 @@
                 device.getService().then(servicelist => {
                     debug.log('service array', servicelist);
 
-                    // device.getCharacteristic('180A').then(result => {
-                    //     debug.log('characteristic array', result);
+                    device.getCharacteristic('180A').then(result => {
+                        debug.log('characteristic array', result);
 
-                        device.readCharacteristicByUUID('180A', '2A24').then(readResult => {
+                        device.readCharacteristic('2A24').then(readResult => {
                             debug.log('read data', readResult);
 
                             setTimeout(async () => {
@@ -100,8 +100,8 @@
                             }, 3000);
 
                         }).catch(error => alert(JSON.stringify(error))); 
-                    // }).catch(error => alert(JSON.stringify(error))); 
-	         	});
+                    }).catch(error => alert(JSON.stringify(error))); 
+	         	}).catch(error => alert(JSON.stringify(error))); ;
             });
         }
 
