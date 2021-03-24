@@ -83,10 +83,14 @@
                     debug.log('service array', servicelist);
 
                     try {
-                        let char_result = await device.getCharacteristic('180F');
-                        debug.log('characteristic array', char_result);
-                        let read_result = await device.readCharacteristic('2A19');
-                        debug.log('read data', read_result);
+                        // let char_result = await device.getCharacteristic('180F');
+                        // debug.log('characteristic array', char_result);
+
+                        // let read_result = await device.readCharacteristic('2A19');
+                        // debug.log('read data', read_result);
+
+                        let read_result_uuid = await device.readCharacteristicByUUID('180F', '2A19');
+                        debug.log('read data', read_result_uuid);
 
                     } catch (error) {
                         alert(JSON.stringify(error));
