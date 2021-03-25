@@ -83,10 +83,11 @@
                     debug.log('service array', servicelist);
 
                     try {
-                        // let char_result = await device.getCharacteristic('EBE0CCB0-7A0A-4B0C-8A1A-6FF2997DA3A6');
-                        // debug.log('characteristic array', char_result);
+                        let char_result = await device.getCharacteristic('EBE0CCB0-7A0A-4B0C-8A1A-6FF2997DA3A6');
+                        debug.log('characteristic array', char_result);
 
                         // alert(('EBE0CCD7-7A0A-4B0C-8A1A-6FF2997DA3A6').toLocaleLowerCase());
+                        OneChat_readCharacteristic('EBE0CCD7-7A0A-4B0C-8A1A-6FF2997DA3A6')
                         let read_result = await device.readCharacteristic('EBE0CCD7-7A0A-4B0C-8A1A-6FF2997DA3A6');
                         debug.log('read data', read_result);
 
@@ -116,6 +117,6 @@
     <input type=button value="Clear" onClick="debug.log(null)" style="background-color: grey; color: white; font-size: 32px; width: 200px;" />
     <br><br><div id="debug_area" width=300>
     <br>
-    <a href="./examples/testwebBluetooth.html">Test Web Bluetooth 0</a>
+    <a href="./examples/testwebBluetooth.html">Test Web Bluetooth 1</a>
 </body>
 </html>
