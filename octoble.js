@@ -190,7 +190,7 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
                 resolve(readData.data);
             }
         }
-        alert(charuuid);
+        alert('test', charuuid);
         // setTimeout(function() {
         //     waiting = false;
         //     emitter.off('read_characteristic', cb);
