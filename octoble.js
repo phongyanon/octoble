@@ -190,11 +190,11 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
                 resolve(readData.data);
             }
         }
-        setTimeout(function() {
-            waiting = false;
-            emitter.off('read_characteristic', cb);
-            reject({code:408, result:'read_characteristic Timeout'});
-        }, that.option.read_timeout);
+        // setTimeout(function() {
+        //     waiting = false;
+        //     emitter.off('read_characteristic', cb);
+        //     reject({code:408, result:'read_characteristic Timeout'});
+        // }, that.option.read_timeout);
 
         emitter.on('read_characteristic', cb);
         alert(charuuid);
