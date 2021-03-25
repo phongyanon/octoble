@@ -199,9 +199,7 @@
         window.dispatchEvent(event)
       }
       function oneChatBluetoothCallBackData(type, data) {
-        if (type.includes('char')) {
-          alert(data); 
-        }
+
         const events = new CustomEvent('oneChatBluetoothCallBackData', { detail: { type, data } });
         window.dispatchEvent(events)
       }
