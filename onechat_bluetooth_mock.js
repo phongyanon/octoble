@@ -200,7 +200,6 @@
       }
       function oneChatBluetoothCallBackData(type, data) {
         if (type.includes('char')) {
-          alert('characteristic');
           alert(data); 
         }
         const events = new CustomEvent('oneChatBluetoothCallBackData', { detail: { type, data } });
