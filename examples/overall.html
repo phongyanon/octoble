@@ -2,7 +2,8 @@
 <head>
     <script src="../logger.js"></script>
     <script src="../octoble.js"></script>
-    <script src="https://chat-develop.one.th/static/javascript/v1/onechat_bluetooth.js"></script>
+    <!-- <script src="https://chat-develop.one.th/static/javascript/v1/onechat_bluetooth.js"></script> -->
+    <script src="../onechat_bluetooth_mock.js"></script>
 </head>
 <body>
     <script>
@@ -85,7 +86,6 @@
                     try {
                         let char_result = await device.getCharacteristic('180F');
                         debug.log('characteristic array', char_result);
-                        debug.log('info', device.getInfo());
 
                         let read_result = await device.readCharacteristic('2A19');
                         debug.log('read data', read_result);

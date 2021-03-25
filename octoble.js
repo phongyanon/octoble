@@ -355,7 +355,7 @@ emitter.on('stop_scan_bluetooth', () => {
 window.addEventListener('oneChatBluetoothCallBackData', (e) => {
     let type = e.detail.type;
     let data;
-    if(type.includes('read')) alert(data);
+    // if(type.includes('read')) alert(data);
     try {
         data = JSON.parse(e.detail.data);
     }
