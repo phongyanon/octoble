@@ -181,7 +181,9 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
     let uuid = this.uuid.toUpperCase();
 
     alert(1);
-    return('test');
+    return new Promise((resolve, reject) => {
+        resolve('test');
+    });
     // return new Promise(function(resolve, reject) {
     //     let waiting = true;
 
