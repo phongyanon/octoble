@@ -1,9 +1,8 @@
 <html>
 <head>
     <script src="../logger.js"></script>
-    <!-- <script src="../octoble.js"></script> -->
-    <script src="https://chat-develop.one.th/static/javascript/v1/onechat_bluetooth.js"></script>
     <script src="../octoble.js"></script>
+    <script src="https://chat-develop.one.th/static/javascript/v1/onechat_bluetooth.js"></script>
 </head>
 <body>
     <script>
@@ -84,8 +83,8 @@
                     debug.log('service array', servicelist);
 
                     try {
-                        let char_result = await device.getCharacteristic('EBE0CCB0-7A0A-4B0C-8A1A-6FF2997DA3A6');
-                        debug.log('characteristic array', char_result);
+                        // let char_result = await device.getCharacteristic('EBE0CCB0-7A0A-4B0C-8A1A-6FF2997DA3A6');
+                        // debug.log('characteristic array', char_result);
 
                         // alert(('EBE0CCD7-7A0A-4B0C-8A1A-6FF2997DA3A6').toLocaleLowerCase());
                         let read_result = await device.readCharacteristic('EBE0CCD7-7A0A-4B0C-8A1A-6FF2997DA3A6');
