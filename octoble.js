@@ -181,28 +181,29 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
     let uuid = this.uuid.toUpperCase();
 
     alert(1);
-    return new Promise(function(resolve, reject) {
-        let waiting = true;
+    return('test');
+    // return new Promise(function(resolve, reject) {
+    //     let waiting = true;
 
-        alert(2);
-        let cb = function(readData) {
-            if (waiting && readData){ //  && readData.device_uuid == uuid) {
-                emitter.off('read_characteristic', cb);
-                waiting = false;
-                resolve(readData.data);
-            }
-        }
-        alert('test', charuuid);
-        setTimeout(function() {
-            waiting = false;
-            emitter.off('read_characteristic', cb);
-            reject({code:408, result:'read_characteristic Timeout'});
-        }, that.option.read_timeout);
+    //     alert(2);
+    //     let cb = function(readData) {
+    //         if (waiting && readData){ //  && readData.device_uuid == uuid) {
+    //             emitter.off('read_characteristic', cb);
+    //             waiting = false;
+    //             resolve(readData.data);
+    //         }
+    //     }
+    //     alert('test', charuuid);
+    //     setTimeout(function() {
+    //         waiting = false;
+    //         emitter.off('read_characteristic', cb);
+    //         reject({code:408, result:'read_characteristic Timeout'});
+    //     }, that.option.read_timeout);
 
-        alert(3);
-        emitter.on('read_characteristic', cb);
-        OneChat_readCharacteristic(charuuid);
-    });
+    //     alert(3);
+    //     emitter.on('read_characteristic', cb);
+    //     OneChat_readCharacteristic(charuuid);
+    // });
 }
 
 DeviceHandler.prototype.readCharacteristicByUUID = function(servuuid, charuuid) {
