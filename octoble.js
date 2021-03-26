@@ -183,25 +183,22 @@ DeviceHandler.prototype.readCharacteristic = function(charuuid) {
     return new Promise(function(resolve, reject) {
         let waiting = true;
 
-        debug.log('1', charuuid);
         let cb = function(readData) {
+            debug.log('readData debug', readData)
             if (waiting && readData){ //  && readData.device_uuid == uuid) {
                 emitter.off('read_characteristic', cb);
                 waiting = false;
                 resolve(readData.data);
             }
         }
-        debug.log('2', charuuid);
         setTimeout(function() {
             waiting = false;
             emitter.off('read_characteristic', cb);
             reject({code:408, result:'read_characteristic Timeout'});
         }, that.option.read_timeout);
 
-        debug.log('3', charuuid);
         emitter.on('read_characteristic', cb);
         OneChat_readCharacteristic(charuuid);
-        debug.log('4', charuuid);
     });
 }
 
