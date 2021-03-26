@@ -95,6 +95,12 @@
 
                     } catch (error) {
                         alert(JSON.stringify(error));
+                        try {
+                            let read_result2 = await device.readCharacteristic('EBE0CCD7-7A0A-4B0C-8A1A-6FF2997DA3A6');
+                            debug.log('read data2', read_result2);
+                        } catch (error) {
+                            alert(JSON.stringify(error));
+                        }
                     }
 
 	         	}).catch(error => alert(JSON.stringify(error)));
